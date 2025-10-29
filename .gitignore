@@ -1,0 +1,25 @@
+# General Logs & System Files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+
+# Dependencies
+# Ignore the node_modules folder in both Frontend and Backend
+/Frontend/node_modules
+/Backend/node_modules
+
+# Vite Build Output
+# Ignore the production build folder for the frontend
+/Frontend/dist
+
+# Environment Variables & Secrets (CRITICAL)
+
+# Ignore the frontend .env file
+/Frontend/.env
+
+# Ignore the backend config.env file
+/Backend/config.env
+
+# Ignore the Firebase Admin master key
+/Backend/serviceprivatekey.json
