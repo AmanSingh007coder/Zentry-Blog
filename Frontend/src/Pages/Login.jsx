@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../firebase';
-import { AiOutlineGoogle } from 'react-icons/ai';
+import { FcGoogle } from "react-icons/fc";
 
 const Login = ({ setView }) => {
   const [email, setEmail] = useState("");
@@ -52,11 +52,11 @@ const Login = ({ setView }) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div><input type="email" name="email" required maxLength={40} onChange={(e) => setEmail(e.target.value)} placeholder="Email Address" className="w-full px-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"/></div>
         <div><input type="password" name="password" required maxLength={12} onChange={(e) => setPassword(e.target.value)} placeholder="Password" className="w-full px-4 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"/></div>
-        <button type="submit" className="w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-purple-700 shadow-md text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">Sign In</button>
+        <button type="submit" className="w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-purple-700 shadow-md text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors cursor-pointer">Sign In</button>
       </form>
       <div className="relative my-4"><div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-300" /></div><div className="relative flex justify-center text-sm"><span className="bg-white px-2 text-gray-500">OR</span></div></div>
-      <button type="button" onClick={handleGoogleSignIn} className="w-full flex items-center justify-center py-2 px-4 border border-orange-500 rounded-md shadow-sm bg-white text-slate-700 hover:bg-slate-50 transition-colors">
-        <AiOutlineGoogle className="w-5 h-5 mr-3" />
+      <button type="button" onClick={handleGoogleSignIn} className="w-full flex items-center justify-center py-2 px-4 border border-orange-500 rounded-md shadow-sm bg-white text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer">
+        <FcGoogle className="w-5 h-5 mr-3" />
         Sign In with Google
       </button>
       <p className="text-center text-sm text-slate-500">

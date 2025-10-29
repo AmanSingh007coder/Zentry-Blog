@@ -1,11 +1,20 @@
 import { useState, useEffect } from 'react';
 import { fetchAllPosts } from '../api';
 import BlogCard from '../components/BlogCard';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import CategoryRow from '../components/CategoryRow';
 import { FiSearch } from 'react-icons/fi';
 
 const categoriesToShow = ['Technology', 'Travel', 'Lifestyle', 'Food', 'News', 'Cricket'];
+
+const categoryThemes = {
+  Technology: 'red',
+  Travel: 'orange',
+  Lifestyle: 'yellow',
+  Food: 'pink',
+  News: 'red',
+  Cricket: 'blue'
+};
 
 const Homepage = () => {
   const [featuredPosts, setFeaturedPosts] = useState([]);
@@ -63,7 +72,7 @@ const Homepage = () => {
       value={searchQuery} 
       onChange={(e) => setSearchQuery(e.target.value)} 
       placeholder="Search for articles..." 
-      className="w-full px-6 md:py-3.5 py-2.5 border-2 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-sm md:text-xl" 
+      className="w-full px-6 md:py-3 py-2.5 border-2 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-sm md:text-xl" 
     />
     <button 
       type="submit" 
@@ -97,20 +106,28 @@ const Homepage = () => {
 
 
       {!isLoading && regularPosts.length > 0 && (
-        <section className="bg-slate-50 py-5">
+        <section className="bg-slate-50 py-15">
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-15">
             {categoriesToShow.map(category => (
               <CategoryRow
                 key={category}
                 title={category}
                 posts={regularPosts.filter(post => post.category === category)}
+                theme={categoryThemes[category] || 'blue'}
               />
             ))}
           </div>
         </section>
       )}
 
+     <div className="text-center py-16 px-8 bg-white rounded-xl shadow-md">
+            <h3 className="text-2xl font-serif font-bold text-slate-800">No Posts Yet</h3>
+            <p className="mt-2 text-yellow-400">It's time to share your first story with the world!</p>
+            <Link to="/create-blog" className="mt-6 inline-block bg-gradient-to-r from-orange-400 to-orange-500 ext-white font-semibold px-6 py-2 rounded-md hover:bg-indigo-700 transition-colors text-white">
+              Create a Post
+            </Link>
+          </div>
     </div>
   );
 };

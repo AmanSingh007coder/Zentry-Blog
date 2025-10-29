@@ -38,7 +38,7 @@ const SavedPosts = () => {
           <p className="text-center text-slate-500 py-10">Loading your saved posts...</p>
         ) : savedPosts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {savedPosts.map(post => <BlogCard post={post} key={post._id} />)}
+            {savedPosts.map(post => <BlogCard post={post} key={post._id} theme = 'red' />)}
           </div>
         ) : (
 

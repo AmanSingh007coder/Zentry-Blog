@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import * as jwt_decode from 'jwt-decode';
 
 const Profile = () => {
-  // --- All of your existing logic is unchanged ---
   const [user, setUser] = useState(null);
   const [myPosts, setMyPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -76,10 +75,9 @@ const Profile = () => {
 
   return (
     <div className="space-y-12 mt-24">
-      {/* Profile Header Card */}
+
       <div className="bg-white rounded-xl shadow-md p-8 flex flex-col sm:flex-row items-center gap-8">
-        
-        {/* --- REDESIGNED AVATAR SECTION --- */}
+      
         <div className="flex flex-col items-center gap-2 flex-shrink-0">
           <input 
             type="file" 
@@ -88,13 +86,11 @@ const Profile = () => {
             className="hidden"
             accept="image/png, image/jpeg, image/gif"
           />
-          {/* The avatar itself */}
           {user.avatarUrl ? (
             <img src={user.avatarUrl} alt={user.name} className="w-24 h-24 rounded-full object-cover shadow-md" />
           ) : (
             <div className="w-24 h-24 rounded-full bg-indigo-500 flex items-center justify-center text-white text-4xl font-bold font-serif">{getInitials(user.name)}</div>
           )}
-          {/* The button below the avatar */}
           <button 
             onClick={() => fileInputRef.current.click()} 
             className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
@@ -103,14 +99,13 @@ const Profile = () => {
           </button>
         </div>
 
-        {/* User Info Section */}
+
         <div className="text-center sm:text-left">
           <h1 className="text-4xl font-bold font-serif text-purple-900">{user.name}</h1>
           <p className="text-orange-500 text-lg mt-1">{user.email}</p>
         </div>
       </div>
 
-      {/* Published Posts Section */}
       <div>
         <h2 className="md:text-3xl text-xl font-bold font-serif mb-8 px-5 bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
           Your Published Posts
@@ -123,6 +118,7 @@ const Profile = () => {
                 post={post}
                 showActions={true}
                 onDelete={handleDelete}
+                theme='blue'
               />
             ))}
           </div>
@@ -135,6 +131,17 @@ const Profile = () => {
             </Link>
           </div>
         )}
+      </div>
+
+      <div className="mt-12 pt-8 border-t border-slate-200 text-center">
+        <h2 className="text-3xl font-bold font-serif text-slate-900">Ready to Share Your Voice?</h2>
+        <p className="mt-2 text-slate-600">Join our community and publish your first article.</p>
+        <Link 
+          to="/create-blog"
+          className="mt-6 inline-block bg-gradient-to-r from-orange-400 to-orange-600 text-white font-semibold px-8 py-3 rounded-md transition-colors duration-300"
+        >
+          Create a Post
+        </Link>
       </div>
     </div>
   );

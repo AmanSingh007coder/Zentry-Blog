@@ -12,7 +12,7 @@ const LandingNavbar = ({ openModal }) => {
   return (
     <header className="w-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-md fixed z-40">
       <nav className="max-w-full mx-auto flex items-center justify-between p-4 sm:p-6">
-        <h1 className="md:text-3xl text-2xl font-bold font-serif text-white">Zentry.in</h1>
+        <h1 className="md:text-3xl text-xl font-bold font-serif text-white">Zentry.in</h1>
         <ul className="hidden md:flex items-center space-x-8 text-lg text-white">
           <li><a href="#home" className="hover:text-orange-200 transition-colors">Home</a></li>
           <li><a href="#features" className="hover:text-orange-200 transition-colors">Features</a></li>
@@ -73,10 +73,10 @@ const HeroSection = ({ openModal }) => (
 
     <div aria-hidden="true" className="absolute inset-0 z-0">
 
-      <div className="absolute top-50 left-0 -translate-x-1/2 -translate-y-1/2 w-126 h-146 bg-gradient-to-br from-purple-200 to-purple-200 rounded-full opacity-90 blur-2xl"></div>
+      <div className="absolute top-50 left-0 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-gradient-to-br from-purple-200 to-purple-400 rounded-full opacity-20 blur-2xl"></div>
       
 
-      <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-[40rem] h-[40rem] bg-gradient-to-br from-orange-200 to-rose-200 rounded-full opacity-50 blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-[40rem] h-[40rem] bg-gradient-to-br from-sky-200 to-sky-400 rounded-full opacity-25 blur-3xl"></div>
     </div>
     
 
