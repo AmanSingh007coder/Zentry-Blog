@@ -10,7 +10,7 @@ const userRouter = require('./routes/UserRoute');
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://zentry-blog.vercel.app'
+  'https://zentry-blog.vercel.app/'
 ];
 
 const corsOptions = {
