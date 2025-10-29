@@ -20,7 +20,7 @@ const Navbar = () => {
     >
       <nav 
         className="flex items-center justify-between bg-gradient-to-r from-purple-600 to-purple-800 
-                   text-white rounded-full shadow-xl px-6 py-4 backdrop-blur-md bg-opacity-90"
+                   text-white rounded-full shadow-xl md:px-6 md:py-4 px-4 py-3.5 backdrop-blur-md bg-opacity-90"
       >
         
 

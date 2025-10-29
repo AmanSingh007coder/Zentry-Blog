@@ -35,7 +35,15 @@ const Contact = () => {
   return (
     <div className="bg-white rounded-xl shadow-md p-8 md:p-12 mt-24">
       <div className="text-center mb-12">
-        <h1 className="text-3xl md:text-5xl font-bold font-serif text-white bg-gradient-to-r from-blue-400 to-pink-400 p-0.5 md:mx-135 mx-20 text-center rounded-3xl sm:px-0 my-8">Get in Touch</h1>
+        <h1 
+    className="inline-block bg-gradient-to-r from-blue-400 to-pink-400 text-white 
+               px-6 py-2 md:px-10 md:py-3 
+               text-2xl md:text-4xl 
+               font-bold font-serif 
+               rounded-full shadow-lg"
+  >
+    Get in Touch
+  </h1>
         <p className="mt-3 text-lg text-slate-600 max-w-2xl mx-auto">
           Have a question or want to work together? I'd love to hear from you.
         </p>

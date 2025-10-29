@@ -5,8 +5,8 @@ const About = () => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden mt-20 max-w-6xl mx-auto">
       <div className="text-center py-12 md:py-20 bg-orange-300 border-b border-slate-200">
-        <h1 className="text-4xl md:text-5xl font-bold font-serif text-slate-900">About Zentry Blog</h1>
-        <p className="mt-3 text-lg text-slate-600 max-w-3xl mx-auto px-4">
+        <h1 className="text-3xl md:text-5xl font-bold font-serif text-slate-900">About Zentry Blog</h1>
+        <p className="mt-3 text-md md:text-xl text-slate-600 max-w-3xl mx-auto px-4">
           A community-driven platform for exploring the latest in technology and web development.
         </p>
       </div>

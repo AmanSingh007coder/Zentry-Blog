@@ -141,7 +141,7 @@ const CreateBlog = () => {
       <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 z-40">
 
         <div className="bg-slate-50 rounded-xl shadow-lg p-8 space-y-6">
-          <h2 className="text-3xl font-extrabold font-serif text-purple-900 border-b pb-4">Create New Blog Post</h2>
+          <h2 className=" text-xl md:text-3xl font-extrabold font-serif text-purple-900 border-b pb-4">Create New Blog Post</h2>
           <input
             id="title"
             type="text"
@@ -149,7 +149,7 @@ const CreateBlog = () => {
             onChange={(e) => setTitle(e.target.value)}
             required
             placeholder="Your Title...."
-            className="w-full text-2xl font-bold font-serif border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-purple-500 transition-colors py-2"
+            className="w-full text-lg md:text-2xl font-bold font-serif border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-purple-500 transition-colors py-2"
           />
           <textarea
             id="description"
@@ -158,7 +158,7 @@ const CreateBlog = () => {
             rows={2}
             required
             placeholder="Write a short, engaging description..."
-            className="block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-lg"
           />
           <div className="border border-slate-300 rounded-md overflow-hidden">
             <MenuBar editor={editor} />

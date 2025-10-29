@@ -3,7 +3,7 @@ import { fetchAllPosts } from '../api';
 import BlogCard from '../components/BlogCard';
 import { useNavigate } from 'react-router-dom';
 import CategoryRow from '../components/CategoryRow';
-
+import { FiSearch } from 'react-icons/fi';
 
 const categoriesToShow = ['Technology', 'Travel', 'Lifestyle', 'Food', 'News', 'Cricket'];
 
@@ -48,29 +48,39 @@ const Homepage = () => {
           
 
           <div className="text-center">
-            <h1 className="text-4xl sm:text-5xl font-bold font-serif bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-5xl font-bold font-serif bg-gradient-to-r from-purple-600 to-orange-500 bg-clip-text text-transparent">
               Discover Articles
             </h1>
-            <p className="mt-2 text-lg text-purple-700">
+            <p className="mt-2 text-sm md:text-xl text-purple-700">
               Insights and stories on topics you love.
             </p>
           </div>
 
           <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
-            <div className="relative">
-              <input type="search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search for articles..." className="w-full px-6 py-3.5 border-2 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white" />
-              <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 bg-orange-400 text-white rounded-full px-8 py-2 font-medium hover:bg-orange-500 transition-colors">
-                Search
-              </button>
-            </div>
-          </form>
+  <div className="relative">
+    <input 
+      type="search" 
+      value={searchQuery} 
+      onChange={(e) => setSearchQuery(e.target.value)} 
+      placeholder="Search for articles..." 
+      className="w-full px-6 md:py-3.5 py-2.5 border-2 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-sm md:text-xl" 
+    />
+    <button 
+      type="submit" 
+      className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-orange-400 text-white rounded-full px-4 sm:px-8 py-2 font-medium hover:bg-orange-500 transition-colors"
+    >
+      <span className="hidden sm:inline">Search</span>
+      <span className="sm:hidden"><FiSearch size={20} /></span>
+    </button>
+  </div>
+</form>
 
           {isLoading && <p className="text-center text-slate-500">Loading content...</p>}
 
 
           {!isLoading && featuredPosts.length > 0 && (
             <div>
-              <h3 className="text-3xl font-bold font-serif bg-gradient-to-r from-purple-800 to-orange-500 bg-clip-text text-transparent mb-8">
+              <h3 className="md:text-3xl text-2xl font-bold font-serif bg-gradient-to-r from-purple-900 to-orange-700 bg-clip-text text-transparent mb-8">
                 Featured Articles
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
