@@ -1,5 +1,5 @@
-import CreateUser from '../pages/CreateUser'; 
-import Login from '../pages/Login';           
+import CreateUser from '../Pages/CreateUser'; 
+import Login from '../Pages/Login';           
 
 const AuthModal = ({ isOpen, onClose, view, setView }) => {
   if (!isOpen) return null;
