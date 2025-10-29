@@ -2,8 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose'); 
 require('dotenv').config({ path: './config.env' });
-const admin = require('firebase-admin'); 
-const serviceAccount = require('./serviceprivatekey.json'); 
+const serviceAccountString = process.env.FIREBASE_SERVICE_ACCOUNT;
+const serviceAccount = JSON.parse(serviceAccountString);
 
 
 admin.initializeApp({
