@@ -1,5 +1,5 @@
 const Post = require('../models/PostModel');
-const Comment = require('../models/commentModel');
+const Comment = require('../models/CommentModel');
 const cloudinary = require('cloudinary').v2;
 const streamifier = require('streamifier');
 
