@@ -47,10 +47,10 @@ exports.googleAuth = async (req, res) => {
   const { token } = req.body;
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-    const { name, email } = decodedToken;
+    const { name, email, picture } = decodedToken;
     let user = await User.findOne({ email });
     if (!user) {
-      user = await User.create({ name, email });
+      user = await User.create({ name, email, avatarUrl: picture });
     }
     const payload = { _id: user._id, name: user.name, role: user.role, email: user.email };
     const myAppToken = jwt.sign(payload, process.env.SECRETKEY, { expiresIn: '1h' });
