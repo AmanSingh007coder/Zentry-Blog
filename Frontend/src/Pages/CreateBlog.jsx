@@ -83,7 +83,7 @@ const CreateBlog = () => {
     setImageFile(e.target.files[0]);
   };
 
-
+  // --- THIS IS THE CORRECTED SUBMIT FUNCTION ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!imageFile) {
@@ -99,30 +99,33 @@ const CreateBlog = () => {
 
     setIsUploading(true);
     let imageUrl = '';
+
+    // Step 1: Upload the image to the dedicated upload endpoint
     try {
       const formData = new FormData();
-      formData.append('imageFile', imageFile); 
+      formData.append('imageFile', imageFile); // This key must match your backend (multer)
       
-      const response = await axios.post('http://localhost:3004/posts/upload-image', formData, {
+      const response = await axios.post('https://zentry-blog-backend.onrender.com/posts/upload-image', formData, {
         headers: { 
           'Content-Type': 'multipart/form-data',
+          // Important: Send token for protected routes
           'Authorization': `Bearer ${sessionStorage.getItem("User")}` 
         }
       });
       imageUrl = response.data.imageUrl;
 
     } catch (error) {
-  console.error("Error uploading image:", error);
-  console.error("Error response:", error.response?.data);
-  alert(`Image upload failed: ${error.response?.data?.message || error.message}`);
-  setIsUploading(false);
-  return;
-} 
+      console.error("Error uploading image:", error);
+      alert("Image upload failed. Please try again.");
+      setIsUploading(false);
+      return; // Stop if the image upload fails
+    } 
     
-
+    // Step 2: Create the post with the new imageUrl
     try {
       const blogobject = { title, description, content, imageUrl, category, isFeatured };
-
+      
+      // Call your existing API function that sends JSON
       const newPost = await createOnePost(blogobject);
       
       alert("Blog Created Successfully");
@@ -134,14 +137,15 @@ const CreateBlog = () => {
       setIsUploading(false);
     }
   };
-
+  // --- End of the corrected function ---
 
   return (
     <div className="min-h-screen pt-28 pb-12 px-4">
       <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 z-40">
-
+        
+        {/* Card 1: The Writing Canvas */}
         <div className="bg-slate-50 rounded-xl shadow-lg p-8 space-y-6">
-          <h2 className=" text-xl md:text-3xl font-extrabold font-serif text-purple-900 border-b pb-4">Create New Blog Post</h2>
+          <h2 className="text-xl md:text-3xl font-extrabold font-serif text-purple-900 border-b pb-4">Create New Blog Post</h2>
           <input
             id="title"
             type="text"
@@ -181,6 +185,7 @@ const CreateBlog = () => {
           </div>
         </div>
 
+        {/* Card 2: Publishing and Settings */}
         <div className="bg-slate-50 rounded-xl shadow-lg p-8 space-y-6">
           <h2 className="text-2xl font-bold font-serif text-slate-800 border-b pb-4">Publishing & Settings</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
