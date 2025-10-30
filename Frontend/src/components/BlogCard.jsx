@@ -52,19 +52,19 @@ const BlogCard = ({ post, showActions = false, onDelete, theme = 'green' }) => {
       hoverShadow: 'hover:shadow-[0_0_20px_0px_rgba(139,92,246,0.3),_0_0_40px_0px_rgba(167,139,250,0.2)]' 
     },
     orange: {
-      bar: 'bg-gradient-to-r from-orange-300 to-orange-500',
+      bar: 'bg-gradient-to-r from-orange-200 to-orange-400',
       hoverShadow: 'hover:shadow-[0_0_20px_0px_rgba(249,115,22,0.3),_0_0_40px_0px_rgba(251,146,60,0.2)]' 
     },
     blue: {
-      bar: 'bg-gradient-to-r from-blue-400 to-indigo-400',
+      bar: 'bg-gradient-to-r from-blue-200 to-indigo-300',
       hoverShadow: 'hover:shadow-[0_0_20px_0px_rgba(14,165,233,0.3),_0_0_40px_0px_rgba(56,189,248,0.2)]' 
     },
      red: {
-      bar: 'bg-gradient-to-r from-red-400 to-red-600',
+      bar: 'bg-gradient-to-r from-red-300 to-red-500',
      hoverShadow: 'hover:shadow-[0_0_20px_0px_rgba(239,68,68,0.3),_0_0_40px_0px_rgba(248,113,113,0.2)]'
     },
      pink: {
-      bar: 'bg-gradient-to-r from-pink-400 to-purple-400',
+      bar: 'bg-gradient-to-r from-pink-200 to-purple-300',
     hoverShadow: 'hover:shadow-[0_0_20px_0px_rgba(236,72,153,0.3),_0_0_40px_0px_rgba(244,114,182,0.2)]'
     },
       yellow: {

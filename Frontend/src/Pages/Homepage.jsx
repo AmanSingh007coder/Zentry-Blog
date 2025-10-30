@@ -72,7 +72,7 @@ const Homepage = () => {
       value={searchQuery} 
       onChange={(e) => setSearchQuery(e.target.value)} 
       placeholder="Search for articles..." 
-      className="w-full px-6 md:py-3 py-2.5 border-2 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-sm md:text-xl" 
+      className="w-full px-6 md:py-3 py-2.5 border-2 rounded-full shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-sm md:text-lg" 
     />
     <button 
       type="submit" 
