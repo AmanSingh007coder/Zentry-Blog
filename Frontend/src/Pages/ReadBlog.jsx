@@ -3,8 +3,9 @@ import { fetchOnePost, fetchComments, createComment, deleteComment } from '../ap
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { WhatsappShareButton, LinkedinShareButton, WhatsappIcon, LinkedinIcon } from 'react-share';
 import * as jwt_decode from 'jwt-decode';
+import Navbar from '../components/Navbar'; // <-- 1. Import the Navbar
 
-
+// A reusable sub-component for displaying a single comment.
 const Comment = ({ comment, currentUserId, onDelete }) => {
   const date = new Date(comment.createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -23,7 +24,7 @@ const Comment = ({ comment, currentUserId, onDelete }) => {
 
   return (
     <div className="flex space-x-4 group">
-
+      {/* --- AVATAR NOW SHOWS REAL IMAGE OR INITIALS --- */}
       <div className="flex-shrink-0">
         {comment.author?.avatarUrl ? (
           <img src={comment.author.avatarUrl} alt={comment.author.name} className="w-10 h-10 rounded-full object-cover" />
@@ -124,92 +125,107 @@ const ReadBlog = () => {
   const shareUrl = window.location.href;
 
   if (isLoading) {
-    return <div className="text-center text-slate-500 py-10 mt-24">Loading post...</div>;
+    return (
+      <>
+        <Navbar />
+        <div className="text-center text-slate-500 py-10 mt-24">Loading post...</div>
+      </>
+    );
   }
 
   if (!post) {
-    return <div className="text-center text-slate-500 py-10 mt-24">Post not found.</div>;
+    return (
+      <>
+        <Navbar />
+        <div className="text-center text-slate-500 py-10 mt-24">Post not found.</div>
+      </>
+    );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden mt-24 mx-auto max-w-4xl">
-
-      {post.imageUrl && (
-        <img src={post.imageUrl} alt={post.title} className="w-full h-64 md:h-96 object-cover" />
-      )}
-
-      <div className="p-8 md:p-12">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold font-serif leading-tight">{post.title}</h1>
-          <p className="mt-4 text-lg text-slate-500">{post.description}</p>
-          <div className="mt-6 text-sm text-orange-400">
-            <span>Published on {displayDate} by {post.author?.name || 'Anonymous'}</span>
-          </div>
-        </div>
-        
-        <div className="flex items-center justify-center gap-4 mb-10">
-          <p className="text-sm font-semibold text-purple-900">Share this post:</p>
-          <WhatsappShareButton url={shareUrl} title={post.title}><WhatsappIcon size={32} round /></WhatsappShareButton>
-          <LinkedinShareButton url={shareUrl} title={post.title}><LinkedinIcon size={32} round /></LinkedinShareButton>
+    <>
+      <Navbar /> {/* <-- 2. The Navbar is now part of the page */}
+      <div className="bg-white rounded-xl shadow-md overflow-hidden mt-24 mx-auto max-w-4xl">
+        {/* Back Button */}
+        <div className="p-4">
+          <button onClick={() => navigate(-1)} className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
+            &larr; Back
+          </button>
         </div>
 
-        <hr className="my-8 border-slate-200" />
-        
-        <article className="prose prose-lg max-w-none prose-slate" dangerouslySetInnerHTML={{ __html: post.content }} />
-      </div>
-
-
-      <div className="p-8 md:p-12 border-t border-slate-200 bg-slate-100 rounded-b-xl">
-        <h2 className="text-3xl font-bold font-serif mb-6">Comments ({comments.length})</h2>
-        
-
-        {currentUser ? (
-          <form onSubmit={handleCommentSubmit} className="mb-8">
-            <textarea
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Write your comment..."
-              rows="3"
-              className="w-full p-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            ></textarea>
-            <button
-              type="submit"
-              className="mt-2 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 disabled:bg-slate-400"
-              disabled={!newComment.trim()}
-            >
-              Post Comment
-            </button>
-          </form>
-        ) : (
-          <div className="text-center p-4 border border-dashed rounded-lg">
-            <p className="text-slate-500">
-              <Link to="/" className="font-semibold text-indigo-600 hover:underline">Sign in</Link> to leave a comment.
-            </p>
-          </div>
+        {/* Featured Image */}
+        {post.imageUrl && (
+          <img src={post.imageUrl} alt={post.title} className="w-full h-64 md:h-96 object-cover" />
         )}
 
-        <div className="space-y-6">
-          {comments.length > 0 ? (
-            comments.map(comment => 
-              <Comment 
-                key={comment._id} 
-                comment={comment}
-                currentUserId={currentUser?._id}
-                onDelete={handleCommentDelete}
-              />
-            )
+        {/* Article Content */}
+        <div className="p-8 md:p-12">
+          <div className="text-center mb-10">
+            <h1 className="text-4xl md:text-5xl font-bold font-serif leading-tight">{post.title}</h1>
+            <p className="mt-4 text-lg text-slate-500">{post.description}</p>
+            <div className="mt-6 text-sm text-orange-400">
+              <span>Published on {displayDate} by {post.author?.name || 'Anonymous'}</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <p className="text-sm font-semibold text-purple-900">Share this post:</p>
+            <WhatsappShareButton url={shareUrl} title={post.title}><WhatsappIcon size={32} round /></WhatsappShareButton>
+            <LinkedinShareButton url={shareUrl} title={post.title}><LinkedinIcon size={32} round /></LinkedinShareButton>
+          </div>
+
+          <hr className="my-8 border-slate-200" />
+          
+          <article className="prose prose-lg max-w-none prose-slate" dangerouslySetInnerHTML={{ __html: post.content }} />
+        </div>
+
+        {/* Comments Section */}
+        <div className="p-8 md:p-12 border-t border-slate-200 bg-slate-100 rounded-b-xl">
+          <h2 className="text-3xl font-bold font-serif mb-6">Comments ({comments.length})</h2>
+          
+          {/* --- CONDITIONAL COMMENT FORM --- */}
+          {currentUser ? (
+            <form onSubmit={handleCommentSubmit} className="mb-8">
+              <textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Write your comment..."
+                rows="3"
+                className="w-full p-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              ></textarea>
+              <button
+                type="submit"
+                className="mt-2 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700 disabled:bg-slate-400"
+                disabled={!newComment.trim()}
+              >
+                Post Comment
+              </button>
+            </form>
           ) : (
-            !currentUser && <p className="text-slate-500 text-center py-4">No comments yet.</p>
+            <div className="text-center p-4 border border-dashed rounded-lg mb-8">
+              <p className="text-slate-500">
+                <Link to="/" className="font-semibold text-indigo-600 hover:underline">Sign in</Link> to leave a comment.
+              </p>
+            </div>
           )}
+
+          <div className="space-y-6">
+            {comments.length > 0 ? (
+              comments.map(comment => 
+                <Comment 
+                  key={comment._id} 
+                  comment={comment}
+                  currentUserId={currentUser?._id}
+                  onDelete={handleCommentDelete}
+                />
+              )
+            ) : (
+              !currentUser && <p className="text-slate-500 text-center py-4">No comments yet.</p>
+            )}
+          </div>
         </div>
       </div>
-
-      <div className="p-4 bg-slate-100">
-        <button onClick={() => navigate(-1)} className="text-sm font-semibold bg-orange-400 p-3 rounded-full hover:bg-indigo-700 text-white transition-colors">
-          &larr; Back to all posts
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 

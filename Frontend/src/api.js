@@ -191,22 +191,30 @@ export async function deletePostAdmin(postId) {
   }
 }
 
-export async function createComment(postId, commentData) {
+export async function fetchComments(postId) {
   try {
-    const response = await axios.post(`${URL}/posts/${postId}/comments`, commentData);
+    const token = getToken();
+    const config = token ? {
+      headers: { 'Authorization': `Bearer ${token}` }
+    } : {};
+    
+    const response = await axios.get(`${URL}/posts/${postId}/comments`, config);
     return response.data;
   } catch (error) {
-    console.error("Error creating comment:", error);
+    console.error("Error fetching comments:", error);
     throw error;
   }
 }
 
-export async function fetchComments(postId) {
+export async function createComment(postId, commentData) {
   try {
-    const response = await axios.get(`${URL}/posts/${postId}/comments`);
+    const token = getToken();
+    const response = await axios.post(`${URL}/posts/${postId}/comments`, commentData, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
     return response.data;
   } catch (error) {
-    console.error("Error fetching comments:", error);
+    console.error("Error creating comment:", error);
     throw error;
   }
 }
@@ -224,7 +232,7 @@ export async function sendContactMessage(formData) {
 export async function fetchLandingPosts() {
   try {
     const response = await axios.get(`${URL}/posts`);
-    const featured = response.data.filter(post => post.isFeatured).slice(0, 3);
+    const featured = response.data.filter(post => post.isFeatured).slice(0, 5);
     return featured;
   } catch (error) {
     console.error("Error fetching featured posts:", error);

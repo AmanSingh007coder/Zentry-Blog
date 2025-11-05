@@ -12,6 +12,9 @@ const CreateUser = ({ setView }) => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // ADD THIS - Get the API URL
+  const URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3004";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const useraccountobject = { name, email, password };
@@ -32,7 +35,10 @@ const CreateUser = ({ setView }) => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
       const idToken = await user.getIdToken();
-      const response = await axios.post('http://localhost:3004/users/google-auth', { token: idToken });
+      
+      // CHANGED THIS LINE - Use the URL variable instead of hardcoded localhost
+      const response = await axios.post(`${URL}/users/google-auth`, { token: idToken });
+      
       const myAppToken = response.data.token;
       if (myAppToken) {
         sessionStorage.setItem("User", myAppToken);

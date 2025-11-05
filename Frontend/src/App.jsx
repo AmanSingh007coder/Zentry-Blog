@@ -31,9 +31,9 @@ useEffect(() => {
       <SavedPostsProvider>
       <Routes>
         <Route path='/' element={<Landing/>}/>
+        <Route path='/read-blog/:id' element={<ReadBlog/>}/>
         <Route element={<Layout/>}>
         <Route path='/home' element={<HomePage/>}/>
-        <Route path='/read-blog/:id' element={<ReadBlog/>}/>
         <Route path='/create-blog' element={<CreateBlog/>}/>
         <Route path='/edit-post/:id' element={<EditBlog/>}/>
         <Route path='/about' element={<About/>}/>
