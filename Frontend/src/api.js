@@ -2,8 +2,12 @@ import axios from "axios";
 
 const URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3004";
 
+// Helper function to get the token from session storage
 const getToken = () => sessionStorage.getItem("User");
 
+// ===================================
+// Public API Calls (No Token Needed)
+// ===================================
 
 export async function fetchAllPosts() {
   try {
@@ -25,75 +29,13 @@ export async function fetchOnePost(id) {
   }
 }
 
-export async function createOnePost(post) {
+export async function fetchLandingPosts() {
   try {
-    const token = getToken(); 
-    const response = await axios.post(`${URL}/posts`, post, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    return response.data;
+    const response = await axios.get(`${URL}/posts`);
+    const featured = response.data.filter(post => post.isFeatured).slice(0, 5);
+    return featured;
   } catch (error) {
-    console.error("Error creating post:", error);
-    throw error;
-  }
-}
-
-export async function updateOnePost(id, post) {
-  try {
-    const response = await axios.put(`${URL}/posts/${id}`, post);
-    return response.data;
-  } catch (error) {
-    console.error(`Error updating post with id ${id}:`, error);
-    throw error;
-  }
-}
-
-export async function deleteOnePost(id) {
-  try {
-    const response = await axios.delete(`${URL}/posts/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error deleting post with id ${id}:`, error);
-    throw error;
-  }
-}
-
-export async function fetchMyPosts() {
-  try {
-    const token = sessionStorage.getItem("User");
-    const response = await axios.get(`${URL}/posts/myposts`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching user's posts:", error);
-    throw error;
-  }
-}
-
-
-export async function searchPosts(query) {
-  try {
-    const response = await axios.get(`${URL}/posts/search?q=${query}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error searching for posts with query "${query}":`, error);
-    throw error;
-  }
-}
-
-                                                               // user api
-
-export async function fetchOneUser(id) {
-  try {
-    const response = await axios.get(`${URL}/users/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching user with id ${id}:`, error);
+    console.error("Error fetching featured posts:", error);
     throw error;
   }
 }
@@ -108,114 +50,12 @@ export async function createOneUser(user) {
   }
 }
 
-export async function updateOneUser(id, user) {
-  try {
-    const response = await axios.put(`${URL}/users/${id}`, user);
-    return response.data;
-  } catch (error) {
-    console.error(`Error updating user with id ${id}:`, error);
-    throw error;
-  }
-}
-
 export async function verifyUser(user){
   const response = await axios.post(`${URL}/users/login`, user);
   if(response.data.success){
-   return response.data.token;
-}
-else{
-  return null;
-}
-}
-
-export async function toggleSavePost(postId) {
-  try { 
-    const response = await axios.put(`${URL}/users/save/${postId}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error saving/unsaving post ${postId}:`, error);
-    throw error;
-  }
-}
-
-export async function fetchSavedPosts() {
-  try { 
-    const response = await axios.get(`${URL}/users/saved-posts`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching saved posts:", error);
-    throw error;
-  }
-}
-
-                                                                   // Admin API
-
-export async function fetchAllUsers() {
-  try {
-    const response = await axios.get(`${URL}/admin/users`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching all users:", error);
-    throw error;
-  }
-}
-
-export async function deleteUser(userId) {
-  try {
-    const response = await axios.delete(`${URL}/admin/users/${userId}`);
-    return response.data;
-  } catch (error) {
-    console.error(`Error deleting user with id ${userId}:`, error);
-    throw error;
-  }
-}
-
-
-export async function fetchAllPostsAdmin() {
-  try {
-    const response = await axios.get(`${URL}/admin/posts`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching all posts for admin:", error);
-    throw error;
-  }
-}
-
-export async function deletePostAdmin(postId) {
-  try {
-    const response = await axios.delete(`${URL}/admin/posts/${postId}`);
-    return response.data;
-  } catch (error){
-    console.error(`Error deleting post ${postId} for admin:`, error);
-    throw error;
-  }
-}
-
-export async function fetchComments(postId) {
-  try {
-    const token = getToken();
-    const config = token ? {
-      headers: { 'Authorization': `Bearer ${token}` }
-    } : {};
-    
-    const response = await axios.get(`${URL}/posts/${postId}/comments`, config);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching comments:", error);
-    throw error;
-  }
-}
-
-export async function createComment(postId, commentData) {
-  try {
-    const token = getToken();
-    const response = await axios.post(`${URL}/posts/${postId}/comments`, commentData, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error creating comment:", error);
-    throw error;
+    return response.data.token;
+  } else {
+    return null;
   }
 }
 
@@ -229,18 +69,6 @@ export async function sendContactMessage(formData) {
   }
 }
 
-export async function fetchLandingPosts() {
-  try {
-    const response = await axios.get(`${URL}/posts`);
-    const featured = response.data.filter(post => post.isFeatured).slice(0, 5);
-    return featured;
-  } catch (error) {
-    console.error("Error fetching featured posts:", error);
-    throw error;
-  }
-}
-
-
 export async function subscribeToNewsletter(email) {
   try {
     const response = await axios.post(`${URL}/subscribe`, { email });
@@ -251,9 +79,135 @@ export async function subscribeToNewsletter(email) {
   }
 }
 
+// =====================================
+// Protected API Calls (Token Required)
+// =====================================
+
+export async function fetchOneUser(id) {
+  try {
+    const response = await axios.get(`${URL}/users/${id}`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching user with id ${id}:`, error);
+    throw error;
+  }
+}
+
+export async function createOnePost(post) {
+  try {
+    const response = await axios.post(`${URL}/posts`, post, {
+      headers: { 'Authorization': `Bearer ${getToken()}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating post:", error);
+    throw error;
+  }
+}
+
+export async function updateOnePost(id, post) {
+  try {
+    const response = await axios.put(`${URL}/posts/${id}`, post, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating post with id ${id}:`, error);
+    throw error;
+  }
+}
+
+export async function deleteOnePost(id) {
+  try {
+    const response = await axios.delete(`${URL}/posts/${id}`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error deleting post with id ${id}:`, error);
+    throw error;
+  }
+}
+
+export async function fetchMyPosts() {
+  try {
+    const response = await axios.get(`${URL}/posts/myposts`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user's posts:", error);
+    throw error;
+  }
+}
+
+export async function searchPosts(query) {
+  try {
+    const response = await axios.get(`${URL}/posts/search?q=${query}`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error searching for posts with query "${query}":`, error);
+    throw error;
+  }
+}
+
+export async function toggleSavePost(postId) {
+  try { 
+    const response = await axios.put(`${URL}/users/save/${postId}`, {}, { // Added empty object for PUT body
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error saving/unsaving post ${postId}:`, error);
+    throw error;
+  }
+}
+
+export async function fetchSavedPosts() {
+  try { 
+    const response = await axios.get(`${URL}/users/saved-posts`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching saved posts:", error);
+    throw error;
+  }
+}
+
+export async function fetchComments(postId) {
+  try {
+    const response = await axios.get(`${URL}/posts/${postId}/comments`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    throw error;
+  }
+}
+
+export async function createComment(postId, commentData) {
+  try {
+    const response = await axios.post(`${URL}/posts/${postId}/comments`, commentData, {
+      headers: { 'Authorization': `Bearer ${getToken()}` }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error creating comment:", error);
+    throw error;
+  }
+}
+
 export async function deleteComment(commentId) {
   try {
-    await axios.delete(`${URL}/comments/${commentId}`);
+    await axios.delete(`${URL}/comments/${commentId}`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
   } catch (error) {
     console.error(`Error deleting comment ${commentId}:`, error);
     throw error;
@@ -264,7 +218,6 @@ export async function uploadAvatar(file) {
   try {
     const formData = new FormData();
     formData.append('avatarFile', file);
-
     const response = await axios.put(`${URL}/users/avatar`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -278,3 +231,79 @@ export async function uploadAvatar(file) {
   }
 }
 
+export async function fetchUserStats() {
+  try {
+    const response = await axios.get(`${URL}/users/stats`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- FUNCTION WAS MISSING
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user stats:", error);
+    throw error;
+  }
+}
+
+// =====================================
+// Admin API Calls (Token Required)
+// =====================================
+
+export async function fetchAllUsers() {
+  try {
+    const response = await axios.get(`${URL}/admin/users`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all users:", error);
+    throw error;
+  }
+}
+
+export async function deleteUser(userId) {
+  try {
+    const response = await axios.delete(`${URL}/admin/users/${userId}`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error deleting user with id ${userId}:`, error);
+    throw error;
+  }
+}
+
+export async function fetchAllPostsAdmin() {
+  try {
+    const response = await axios.get(`${URL}/admin/posts`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all posts for admin:", error);
+    throw error;
+  }
+}
+
+export async function deletePostAdmin(postId) {
+  try {
+    const response = await axios.delete(`${URL}/admin/posts/${postId}`, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error){
+    console.error(`Error deleting post ${postId} for admin:`, error);
+    throw error;
+  }
+}
+
+// updateOneUser is not used in your app yet, but if it were, it would need a token.
+export async function updateOneUser(id, user) {
+  try {
+    const response = await axios.put(`${URL}/users/${id}`, user, {
+      headers: { 'Authorization': `Bearer ${getToken()}` } // <-- TOKEN ADDED
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating user with id ${id}:`, error);
+    throw error;
+  }
+}

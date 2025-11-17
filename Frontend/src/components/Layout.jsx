@@ -11,15 +11,17 @@ const Layout = () => {
     if (!user) {
       navigate('/');
     }
-  }, [user]);
-
+  }, [user, navigate]);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#0A0B13] via-[#111628] to-[#151B2E] text-white">
       <Navbar />
-      <main className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      
+      {/* Main content */}
+      <main className="flex-grow w-full mx-auto px-3 sm:px-6 lg:px-10 pt-24 pb-12">
         <Outlet />
       </main>
+
       <Footer />
     </div>
   );

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { FiMenu } from 'react-icons/fi';
-
-import { pageData } from "./pageData"; 
+import { pageData } from "./pageData";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,75 +13,82 @@ const Navbar = () => {
   };
 
   return (
-    <header 
-      className="fixed z-50 w-full top-0 p-4 transition-all duration-300
-                 md:w-5xl md:top-1 md:left-1/2 md:-translate-x-1/2"
-    >
-      <nav 
-        className="flex items-center justify-between bg-gradient-to-r from-purple-600 to-purple-800 
-                   text-white rounded-full shadow-xl md:px-6 md:py-4 px-4 py-3.5 backdrop-blur-md bg-opacity-90"
+    <header className="fixed z-50 w-full top-0 px-4 py-3 md:px-6 backdrop-blur-xl">
+      <nav
+        className="
+          flex items-center justify-between 
+          bg-[#0C0F1A]/80 
+          border border-cyan-500/20 
+          rounded-2xl 
+          shadow-lg shadow-blue-500/10 
+          px-5 py-3 md:px-8 md:py-4 
+          transition-all
+        "
       >
-        
-
-        <Link to="/home" className="text-2xl font-extrabold font-serif">
-        Zentry.in
+        {/* Brand */}
+        <Link 
+          to="/home" 
+          className="text-2xl font-extrabold font-serif tracking-wide bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
+        >
+          zentry
         </Link>
-        
- 
-        <div className="hidden md:flex items-center space-x-8 text-md mx-8">
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
           {pageData.map((data) => (
             <Link
               key={data.name}
               to={data.path}
-              className="hover:text-orange-500 transition-colors"
+              className="text-slate-300 hover:text-cyan-400 transition"
             >
               {data.name}
             </Link>
           ))}
         </div>
 
-
+        {/* Buttons */}
         <div className="flex items-center space-x-4">
+          <button
+            onClick={handlelogout}
+            className="hidden md:flex bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-5 py-2 rounded-full text-sm font-semibold shadow-md shadow-cyan-500/20 hover:shadow-blue-500/30 transition"
+          >
+            Log Out
+          </button>
 
-          <div className="hidden md:flex">
-            <button
-              onClick={handlelogout}
-              className="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/30 transition-colors"
-            >
-              Log Out
-            </button>
-          </div>
-
-
-          <div className="md:hidden">
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Open menu">
-              <FiMenu className="w-6 h-6" />
-            </button>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Open menu"
+            className="md:hidden text-slate-200"
+          >
+            <FiMenu className="w-6 h-6" />
+          </button>
         </div>
       </nav>
 
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-slate-100 text-slate-800 rounded-lg shadow-lg mt-2">
+        <div className="md:hidden bg-[#0F1322]/95 backdrop-blur-lg text-white rounded-xl shadow-lg border border-cyan-500/20 mt-2">
           <ul className="flex flex-col items-center space-y-4 py-4">
             {pageData.map((data) => (
               <li key={data.name}>
-                <Link 
-                  to={data.path} 
-                  onClick={() => setIsMenuOpen(false)} 
-                  className="hover:text-orange-600"
+                <Link
+                  to={data.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="text-slate-300 hover:text-cyan-400 transition"
                 >
                   {data.name}
                 </Link>
               </li>
             ))}
+
             <li className="pt-4">
               <button
                 onClick={() => {
                   handlelogout();
                   setIsMenuOpen(false);
                 }}
-                className="bg-indigo-600 text-white px-7 py-2 rounded-md text-sm font-semibold hover:bg-indigo-700"
+                className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-7 py-2 rounded-full font-semibold shadow-md shadow-cyan-500/20 hover:shadow-blue-500/30 transition"
               >
                 Log Out
               </button>

@@ -15,48 +15,74 @@ import {
   Link as LinkIcon, Image as ImageIcon
 } from 'lucide-react';
 
+// =======================
+// 🌙 NEON MENU BAR
+// =======================
 const MenuBar = ({ editor }) => {
   if (!editor) return null;
 
   const addImage = () => {
     const url = window.prompt('Enter image URL:');
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
-    }
-  };
-  
-  const addLink = () => {
-    const url = window.prompt('Enter URL:');
-    if (url) {
-        editor.chain().focus().setLink({ href: url }).run();
-    }
+    if (url) editor.chain().focus().setImage({ src: url }).run();
   };
 
+  const addLink = () => {
+    const url = window.prompt('Enter URL:');
+    if (url) editor.chain().focus().setLink({ href: url }).run();
+  };
+
+  const btnStyle = (active) =>
+    `p-2 rounded-md text-white shadow-md transition-all 
+     ${active ? 'bg-cyan-600 shadow-cyan-500/40' : 'bg-cyan-800/40 hover:bg-cyan-700/60'}`;
+
   return (
-    <div className="border-b border-slate-300 p-2 flex flex-wrap gap-1 bg-slate-50">
-      <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('bold') ? 'bg-orange-600' : 'bg-orange-400'}`}><Bold size={18} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('italic') ? 'bg-orange-600' : 'bg-orange-400'}`}><Italic size={18} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleUnderline().run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('underline') ? 'bg-orange-600' : 'bg-orange-400'}`}><UnderlineIcon size={18} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleStrike().run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('strike') ? 'bg-orange-600' : 'bg-orange-400'}`}><Strikethrough size={18} /></button>
-      <div className="w-px h-8 bg-slate-300 mx-1" />
-      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('heading', { level: 1 }) ? 'bg-orange-600' : 'bg-orange-400'}`}><Heading1 size={18} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('heading', { level: 2 }) ? 'bg-orange-600' : 'bg-orange-400'}`}><Heading2 size={18} /></button>
-      <div className="w-px h-8 bg-slate-300 mx-1" />
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign('left').run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive({ textAlign: 'left' }) ? 'bg-orange-600' : 'bg-orange-400'}`}><AlignLeft size={18} /></button>
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign('center').run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive({ textAlign: 'center' }) ? 'bg-orange-600' : 'bg-orange-400'}`}><AlignCenter size={18} /></button>
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign('right').run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive({ textAlign: 'right' }) ? 'bg-orange-600' : 'bg-orange-400'}`}><AlignRight size={18} /></button>
-      <div className="w-px h-8 bg-slate-300 mx-1" />
-      <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('bulletList') ? 'bg-orange-600' : 'bg-orange-400'}`}><List size={18} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('orderedList') ? 'bg-orange-600' : 'bg-orange-400'}`}><ListOrdered size={18} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('blockquote') ? 'bg-orange-600' : 'bg-orange-400'}`}><Quote size={18} /></button>
-      <button type="button" onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('codeBlock') ? 'bg-orange-600' : 'bg-orange-400'}`}><Code size={18} /></button>
-      <div className="w-px h-8 bg-slate-300 mx-1" />
-      <button type="button" onClick={addLink} className={`p-2 rounded text-white hover:bg-orange-500 transition-colors ${editor.isActive('link') ? 'bg-orange-600' : 'bg-orange-400'}`}><LinkIcon size={18} /></button>
-      <button type="button" onClick={addImage} className="p-2 rounded text-white bg-orange-400 hover:bg-orange-500 transition-colors"><ImageIcon size={18} /></button>
+    <div className="border-b border-cyan-900/40 p-2 flex flex-wrap gap-1 bg-[#0B1120]/70 backdrop-blur-md">
+      <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={btnStyle(editor.isActive('bold'))}><Bold size={18} /></button>
+
+      <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={btnStyle(editor.isActive('italic'))}><Italic size={18} /></button>
+
+      <button type="button" onClick={() => editor.chain().focus().toggleUnderline().run()} className={btnStyle(editor.isActive('underline'))}><UnderlineIcon size={18} /></button>
+
+      <button type="button" onClick={() => editor.chain().focus().toggleStrike().run()} className={btnStyle(editor.isActive('strike'))}><Strikethrough size={18} /></button>
+
+      <div className="w-px h-8 bg-cyan-900/40 mx-1" />
+
+      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={btnStyle(editor.isActive('heading', { level: 1 }))}><Heading1 size={18} /></button>
+
+      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={btnStyle(editor.isActive('heading', { level: 2 }))}><Heading2 size={18} /></button>
+
+      <div className="w-px h-8 bg-cyan-900/40 mx-1" />
+
+      <button type="button" onClick={() => editor.chain().focus().setTextAlign('left').run()} className={btnStyle(editor.isActive({ textAlign: 'left' }))}><AlignLeft size={18} /></button>
+
+      <button type="button" onClick={() => editor.chain().focus().setTextAlign('center').run()} className={btnStyle(editor.isActive({ textAlign: 'center' }))}><AlignCenter size={18} /></button>
+
+      <button type="button" onClick={() => editor.chain().focus().setTextAlign('right').run()} className={btnStyle(editor.isActive({ textAlign: 'right' }))}><AlignRight size={18} /></button>
+
+      <div className="w-px h-8 bg-cyan-900/40 mx-1" />
+
+      <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={btnStyle(editor.isActive('bulletList'))}><List size={18} /></button>
+
+      <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={btnStyle(editor.isActive('orderedList'))}><ListOrdered size={18} /></button>
+
+      <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={btnStyle(editor.isActive('blockquote'))}><Quote size={18} /></button>
+
+      <button type="button" onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={btnStyle(editor.isActive('codeBlock'))}><Code size={18} /></button>
+
+      <div className="w-px h-8 bg-cyan-900/40 mx-1" />
+
+      <button type="button" onClick={addLink} className={btnStyle(editor.isActive('link'))}><LinkIcon size={18} /></button>
+
+      <button type="button" onClick={addImage} className="p-2 rounded-md bg-blue-700/60 hover:bg-blue-600 text-white shadow-md shadow-blue-500/40">
+        <ImageIcon size={18} />
+      </button>
     </div>
   );
 };
 
+// =======================
+// 🌙 MAIN CREATE BLOG PAGE
+// =======================
 const CreateBlog = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -74,151 +100,170 @@ const CreateBlog = () => {
     ],
     editorProps: {
       attributes: {
-        class: 'p-4 min-h-[400px] focus:outline-none',
+        class: 'p-4 min-h-[400px] focus:outline-none text-slate-200',
       },
     },
   });
 
-  const handleFileChange = (e) => {
-    setImageFile(e.target.files[0]);
-  };
+  const handleFileChange = (e) => setImageFile(e.target.files[0]);
 
-  // --- THIS IS THE CORRECTED SUBMIT FUNCTION ---
+  // SAME SUBMIT LOGIC (unchanged)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!imageFile) {
-      alert("Please select a featured image for your post.");
-      return;
-    }
-    
+    if (!imageFile) return alert("Please select an image.");
+
     const content = editor.getHTML();
-    if (editor.isEmpty) {
-      alert("Please write some content for your post.");
-      return;
-    }
+    if (editor.isEmpty) return alert("Please write content.");
 
     setIsUploading(true);
     let imageUrl = '';
 
-    // Step 1: Upload the image to the dedicated upload endpoint
     try {
-      const formData = new FormData();
-      formData.append('imageFile', imageFile); // This key must match your backend (multer)
-      
-      const response = await axios.post('https://zentry-blog-backend.onrender.com/posts/upload-image', formData, {
-        headers: { 
-          'Content-Type': 'multipart/form-data',
-          // Important: Send token for protected routes
-          'Authorization': `Bearer ${sessionStorage.getItem("User")}` 
-        }
-      });
-      imageUrl = response.data.imageUrl;
+      const fd = new FormData();
+      fd.append('imageFile', imageFile);
 
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      alert("Image upload failed. Please try again.");
+      const res = await axios.post(
+        'https://zentry-blog-backend.onrender.com/posts/upload-image',
+        fd,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${sessionStorage.getItem("User")}`,
+          },
+        }
+      );
+
+      imageUrl = res.data.imageUrl;
+    } catch (err) {
+      console.error(err);
+      alert("Image upload failed.");
       setIsUploading(false);
-      return; // Stop if the image upload fails
-    } 
-    
-    // Step 2: Create the post with the new imageUrl
+      return;
+    }
+
     try {
-      const blogobject = { title, description, content, imageUrl, category, isFeatured };
-      
-      // Call your existing API function that sends JSON
-      const newPost = await createOnePost(blogobject);
-      
-      alert("Blog Created Successfully");
+      const body = { title, description, content, imageUrl, category, isFeatured };
+      const newPost = await createOnePost(body);
+
+      alert("Blog Created!");
       navigate(`/read-blog/${newPost._id}`);
-    } catch (error) {
-      console.error("Error creating post:", error);
+    } catch (err) {
       alert("Failed to create post.");
     } finally {
       setIsUploading(false);
     }
   };
-  // --- End of the corrected function ---
 
   return (
-    <div className="min-h-screen pt-28 pb-12 px-4">
-      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto space-y-8 z-40">
-        
-        {/* Card 1: The Writing Canvas */}
-        <div className="bg-slate-50 rounded-xl shadow-lg p-8 space-y-6">
-          <h2 className="text-xl md:text-3xl font-extrabold font-serif text-purple-900 border-b pb-4">Create New Blog Post</h2>
+    <div className="min-h-screen pt-28 pb-16 px-4 bg-gradient-to-b from-[#0A0B13] to-[#141A2F] text-white">
+
+      <form onSubmit={handleSubmit} className="max-w-5xl mx-auto space-y-12">
+
+        {/* CARD 1 */}
+        <div className="bg-[#0F1525]/70 backdrop-blur-xl rounded-2xl border border-cyan-900/30 shadow-xl shadow-cyan-500/20 p-10 space-y-6">
+          <h2 className="text-3xl font-serif font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            Create New Blog Post
+          </h2>
+
           <input
             id="title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            placeholder="Your Title...."
-            className="w-full text-lg md:text-2xl font-bold font-serif border-0 border-b-2 border-slate-200 focus:ring-0 focus:border-purple-500 transition-colors py-2"
+            placeholder="Your Title..."
+            className="w-full text-2xl bg-[#0B1120] border border-cyan-900/40 rounded-lg p-3 focus:border-cyan-500 outline-none"
           />
+
           <textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             rows={2}
             required
-            placeholder="Write a short, engaging description..."
-            className="block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-lg"
+            placeholder="Write a short description..."
+            className="w-full bg-[#0B1120] border border-cyan-900/40 rounded-lg p-3 focus:border-cyan-500 outline-none"
           />
-          <div className="border border-slate-300 rounded-md overflow-hidden">
+
+          <div className="border border-cyan-900/40 rounded-lg overflow-hidden bg-[#0A0F1D]">
             <MenuBar editor={editor} />
             <EditorContent editor={editor} />
+
             <style>{`
-              .ProseMirror { min-height: 400px; outline: none; padding: 1rem; }
-              .ProseMirror p.is-editor-empty:first-child::before { color: #9ca3af; content: "Start writing your article here..."; float: left; height: 0; pointer-events: none; }
-              .ProseMirror > * + * { margin-top: 0.75em; }
-              .ProseMirror ul, .ProseMirror ol { padding: 0 1.5rem; margin: 1rem 0; }
-              .ProseMirror ul { list-style-type: disc; }
-              .ProseMirror ol { list-style-type: decimal; }
-              .ProseMirror img { max-width: 100%; height: auto; display: block; margin: 1rem 0; border-radius: 0.5rem; }
-              .ProseMirror h1 { font-size: 2em; font-weight: bold; margin: 0.5em 0; }
-              .ProseMirror h2 { font-size: 1.5em; font-weight: bold; margin: 0.5em 0; }
-              .ProseMirror blockquote { padding-left: 1rem; border-left: 3px solid #cbd5e1; margin: 1rem 0; }
-              .ProseMirror code { background-color: #f1f5f9; padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; }
-              .ProseMirror pre { background: #1e293b; color: #f1f5f9; padding: 0.75rem 1rem; border-radius: 0.5rem; overflow-x: auto; }
-              .ProseMirror pre code { background: none; color: inherit; padding: 0; }
+              .ProseMirror p.is-editor-empty:first-child::before {
+                color: #64748b; 
+                content: "Start writing here...";
+                pointer-events: none;
+              }
             `}</style>
           </div>
         </div>
 
-        {/* Card 2: Publishing and Settings */}
-        <div className="bg-slate-50 rounded-xl shadow-lg p-8 space-y-6">
-          <h2 className="text-2xl font-bold font-serif text-slate-800 border-b pb-4">Publishing & Settings</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* CARD 2 */}
+        <div className="bg-[#0F1525]/70 backdrop-blur-xl rounded-2xl border border-blue-900/30 shadow-xl shadow-blue-500/20 p-10 space-y-6">
+          <h2 className="text-2xl font-serif font-bold text-blue-400">Publishing Settings</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+            {/* LEFT SIDE */}
             <div className="space-y-6">
               <div>
-                <label htmlFor="category" className="block text-sm font-medium text-slate-700 mb-1">Category</label>
-                <select id="category" value={category} onChange={(e) => setCategory(e.target.value)} className="block w-full px-4 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-white">
-                  {categories.map(cat => (<option key={cat} value={cat}>{cat}</option>))}
+                <label className="text-sm text-slate-300">Category</label>
+                <select
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full bg-[#0B1120] border border-blue-900/40 text-white rounded-lg p-3"
+                >
+                  {categories.map((c) => (
+                    <option key={c} value={c} className="bg-[#0B1120]">{c}</option>
+                  ))}
                 </select>
               </div>
-              <div className="flex items-center">
-                <input id="isFeatured" type="checkbox" checked={isFeatured} onChange={(e) => setIsFeatured(e.target.checked)} className="h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500" />
-                <label htmlFor="isFeatured" className="ml-2 block text-sm text-gray-900">Feature this post</label>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={isFeatured}
+                  onChange={(e) => setIsFeatured(e.target.checked)}
+                  className="h-4 w-4 bg-[#0B1120] border-blue-900/40 rounded"
+                />
+                <label className="text-sm text-slate-300">Feature this post</label>
               </div>
             </div>
+
+            {/* IMAGE UPLOAD */}
             <div>
-              <label className="block text-sm font-medium text-slate-700">Featured Image</label>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-md">
-                <div className="space-y-1 text-center">
-                  <svg className="mx-auto h-12 w-12 text-slate-400" stroke="currentColor" fill="none" viewBox="0 0 48 48"><path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  <div className="flex text-sm text-slate-600"><label htmlFor="file-upload" className="relative cursor-pointer rounded-md font-medium text-orange-400 hover:text-orange-600"><span>Upload a file</span><input id="file-upload" type="file" className="sr-only" accept="image/*" onChange={handleFileChange} required /></label><p className="pl-1">or drag and drop</p></div>
-                  <p className="text-xs text-slate-500">PNG, JPG, GIF up to 10MB</p>
-                </div>
+              <label className="text-sm text-slate-300">Featured Image</label>
+
+              <div className="mt-2 border-2 border-dashed border-slate-700 rounded-lg p-6 text-center bg-[#0A0F1D]">
+                <label htmlFor="file-upload" className="cursor-pointer text-cyan-400 hover:text-cyan-300">
+                  Upload a file
+                  <input id="file-upload" type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                </label>
+                <p className="text-xs text-slate-500 mt-2">PNG, JPG, GIF (max 10MB)</p>
               </div>
-              {imageFile && <div className="mt-4"><p className="text-sm font-medium text-slate-700">Preview:</p><img src={URL.createObjectURL(imageFile)} alt="Preview" className="mt-2 rounded-md shadow-md w-full" /></div>}
+
+              {imageFile && (
+                <img
+                  src={URL.createObjectURL(imageFile)}
+                  className="mt-4 rounded-lg border border-slate-700 shadow-lg"
+                  alt="preview"
+                />
+              )}
             </div>
           </div>
-          <div className="pt-6 text-right border-t">
-            <button type="submit" disabled={isUploading} className="inline-flex justify-center py-2 px-6 border border-transparent shadow-sm text-base font-medium rounded-md text-white bg-gradient-to-r from-purple-500 to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:bg-slate-400">
-              {isUploading ? 'Publishing...' : 'Publish Post'}
+
+          <div className="text-right pt-6 border-t border-slate-800">
+            <button
+              type="submit"
+              disabled={isUploading}
+              className="px-8 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/40 text-white font-semibold hover:scale-105 transition"
+            >
+              {isUploading ? "Publishing..." : "Publish Post"}
             </button>
           </div>
         </div>
+
       </form>
     </div>
   );

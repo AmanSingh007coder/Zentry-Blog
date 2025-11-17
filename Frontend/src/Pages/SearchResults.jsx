@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { searchPosts } from '../api'; 
+import { searchPosts } from '../api';
 import BlogCard from '../components/BlogCard';
 
 const SearchResults = () => {
@@ -27,19 +27,30 @@ const SearchResults = () => {
   }, [query]);
 
   return (
-    <div className="space-y-8 mt-30">
-      <h1 className="text-3xl font-bold font-serif">
-        Search Results for: <span className="text-indigo-600">"{query}"</span>
+    <div className="space-y-10 mt-24">
+      
+      {/* Title */}
+      <h1 className="text-4xl md:text-5xl font-bold font-serif text-purple-700">
+        Search Results for: 
+        <span className="text-orange-500"> "{query}"</span>
       </h1>
 
+      {/* Loader */}
       {isLoading ? (
-        <p>Searching...</p>
+        <p className="text-slate-500 text-lg">Searching...</p>
       ) : results.length > 0 ? (
+        
+        // Matching homepage grid
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {results.map(post => <BlogCard post={post} key={post._id} />)}
+          {results.map(post => (
+            <BlogCard post={post} key={post._id} />
+          ))}
         </div>
+
       ) : (
-        <p className="text-slate-500">No posts found matching your search.</p>
+        <p className="text-slate-500 text-lg">
+          No posts found matching your search.
+        </p>
       )}
     </div>
   );
